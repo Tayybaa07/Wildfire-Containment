@@ -29,7 +29,7 @@ The project focuses on AI reasoning (sequential decisions under uncertainty), no
 | Random (B0) | weakest baseline | ✅ done |
 | Nearest-to-fire-front (B1) | fixed heuristic rule | ✅ done |
 | One-step greedy (B2) | maximises exact expected immediate reward | ✅ done |
-| Value iteration / backward DP | exactly optimal policy on tiny grids (gold standard) |  planned |
+| Value iteration / backward DP | exactly optimal policy on tiny grids (gold standard) | ✅ done |
 | Monte Carlo Tree Search (UCT) | scalable planner using rollouts |  planned |
 
 Experiments will measure decision quality, optimality gap, time per decision, memory
@@ -60,6 +60,13 @@ python -m pytest -q          # run the unit tests
 ```
 
 Run everything from the project root so `import wildfire` works.
+
+### Run Stage 2 validation & benchmarks
+
+```bash
+python run_stage2.py
+```
+Validates theoretical $V^*(s_0)$ against 1,500 Monte Carlo rollouts, runs grid scaling ($3\times 3$, $3\times 4$, $4\times 4$), and exports Stage 3 handover reference tables to `results/`.
 
 ### Compare the baselines
 
@@ -102,11 +109,14 @@ wildfire/
   config.py       scenario configuration (grid, vegetation, wind, lambda, k)
   env.py          the MDP: reset, legal_actions, step, transition_probs
   agents.py       NoOp, Random, NearestFront, Greedy
+  exact_solver.py exact solver (Backward DP & Value Iteration), ExactAgent
   simulate.py     episode runner, evaluation, confidence intervals
   visualize.py    console rendering of the grid
 demo.py           baseline comparison script
-tests/            pytest unit tests
-docs/             design notes and interface contract
+run_stage2.py     exact solver validation & scaling benchmarks
+tests/            pytest unit tests (test_env, test_agents, test_exact_solver)
+docs/             design notes (STAGE1_NOTES, STAGE2_NOTES)
+results/          precomputed reference tables and scaling outputs
 ```
 
 ## Interface (for solver and agent code)
@@ -132,7 +142,7 @@ More detail and the modelling decisions are in [`docs/STAGE1_NOTES.md`](docs/STA
 ## Roadmap
 
 - [x] **Stage 1 (Zainab):** environment, simulator, baselines B0 to B2, tests
-- [ ] **Stage 2 (Tayyba):** exact solver (value iteration) on 3x3 and 3x4 grids
+- [x] **Stage 2 (Tayyba):** exact solver (value iteration) on 3x3 and 3x4 grids
 - [ ] **Stage 3 (Basma):** MCTS (UCT) agent and optimality gap against value iteration
 - [ ] **Stage 4 (Tayyba):** experiment runner, rollout-budget sweeps, scalability
 - [ ] **Stage 5 (Zainab, Basma):** 5a robustness experiments; 5b failure-case analysis

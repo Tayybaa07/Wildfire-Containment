@@ -4,8 +4,11 @@
 """
 import argparse
 
-from wildfire import make_config, WildfireEnv, AGENTS, evaluate, run_episode, mean_ci
+from wildfire import make_config, WildfireEnv, AGENTS, evaluate, run_episode, mean_ci, ExactAgent
 from wildfire.visualize import render_vegetation
+
+AVAILABLE_AGENTS = dict(AGENTS)
+AVAILABLE_AGENTS["exact"] = ExactAgent
 
 
 def main():
@@ -18,7 +21,7 @@ def main():
     ap.add_argument("--lam", type=float, default=0.2)
     ap.add_argument("--episodes", type=int, default=500)
     ap.add_argument("--seed", type=int, default=0, help="first episode seed / veg seed")
-    ap.add_argument("--show", choices=list(AGENTS), help="print one episode for this agent")
+    ap.add_argument("--show", choices=list(AVAILABLE_AGENTS), help="print one episode for this agent")
     args = ap.parse_args()
 
     cfg = make_config(args.rows, args.cols, args.veg, veg_seed=args.seed,
@@ -27,12 +30,16 @@ def main():
     print(render_vegetation(env), "\n")
 
     if args.show:
-        run_episode(env, AGENTS[args.show](), args.seed, verbose=True)
+        run_episode(env, AVAILABLE_AGENTS[args.show](), args.seed, verbose=True)
         return
 
     seeds = range(args.seed, args.seed + args.episodes)
     print(f"{'agent':<18}{'return':>16}{'cells saved':>16}{'firebreaks':>12}")
-    for key, cls in AGENTS.items():
+    agents_to_run = dict(AGENTS)
+    if args.rows * args.cols <= 12:
+        agents_to_run["exact"] = ExactAgent
+
+    for key, cls in agents_to_run.items():
         agent = cls()
         res = evaluate(env, agent, seeds)
         r, rci = mean_ci([x["return"] for x in res])
