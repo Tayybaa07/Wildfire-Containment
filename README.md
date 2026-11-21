@@ -1,4 +1,4 @@
-# 🔥 Wildfire Containment: MDP-Based Resource Allocation
+# Wildfire Containment: MDP-Based Resource Allocation
 
 An AI "fire chief" that decides where to place firebreaks while a wildfire spreads
 randomly across a forest grid. The project models wildfire containment as a **Markov
@@ -29,8 +29,8 @@ The project focuses on AI reasoning (sequential decisions under uncertainty), no
 | Random (B0) | weakest baseline | ✅ done |
 | Nearest-to-fire-front (B1) | fixed heuristic rule | ✅ done |
 | One-step greedy (B2) | maximises exact expected immediate reward | ✅ done |
-| Value iteration / backward DP | exactly optimal policy on tiny grids (gold standard) | 🚧 planned |
-| Monte Carlo Tree Search (UCT) | scalable planner using rollouts | 🚧 planned |
+| Value iteration / backward DP | exactly optimal policy on tiny grids (gold standard) |  planned |
+| Monte Carlo Tree Search (UCT) | scalable planner using rollouts |  planned |
 
 Experiments will measure decision quality, optimality gap, time per decision, memory
 (states stored or tree nodes), scalability (up to 10x10), and robustness to a wrong wind
@@ -149,8 +149,8 @@ More detail and the modelling decisions are in [`docs/STAGE1_NOTES.md`](docs/STA
 
 ## AI assistance declaration
 
-Generative-AI tools (Claude) were used for brainstorming the proposal. All code is written, tested and understood by the group members.
-It has been once reviewd by Claude too. 
+Generative-AI tools were used for brainstorming the proposal. All code is written, tested and understood by the group members.
+It has been once reviewed by AI_Tool too. 
 
 ## References
 
