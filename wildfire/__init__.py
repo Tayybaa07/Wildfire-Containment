@@ -6,5 +6,5 @@ from .agents import (Agent, RandomAgent, NearestFrontAgent, GreedyAgent,
 from .simulate import run_episode, evaluate, mean_ci
 from .exact_solver import (ExactSolver, ExactAgent, SolveResult,
                            StateSpaceTooLargeError)
-
+from .mcts import MCTSAgent
 
