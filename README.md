@@ -30,7 +30,7 @@ The project focuses on AI reasoning (sequential decisions under uncertainty), no
 | Nearest-to-fire-front (B1) | fixed heuristic rule | ✅ done |
 | One-step greedy (B2) | maximises exact expected immediate reward | ✅ done |
 | Value iteration / backward DP | exactly optimal policy on tiny grids (gold standard) | ✅ done |
-| Monte Carlo Tree Search (UCT) | scalable planner using rollouts |  planned |
+| Monte Carlo Tree Search (UCT) | scalable planner using rollouts | ✅ done |
 
 Experiments will measure decision quality, optimality gap, time per decision, memory
 (states stored or tree nodes), scalability (up to 10x10), and robustness to a wrong wind
@@ -60,6 +60,14 @@ python -m pytest -q          # run the unit tests
 ```
 
 Run everything from the project root so `import wildfire` works.
+
+### Run Stage 4 experiment runner & scalability benchmarks
+
+```bash
+python run_stage4.py --quick          # fast smoke test (~30s)
+python run_stage4.py                  # full benchmark suites A, B, and C
+```
+Runs small-grid optimality gaps ($3\times 3, 3\times 4$), MCTS budget sweeps ($N \in \{50 \dots 5000\}$), and scalability runs up to $10\times 10$. Results are exported as raw and summary CSV/JSON files in `results/stage4/`.
 
 ### Run Stage 2 validation & benchmarks
 
@@ -110,13 +118,16 @@ wildfire/
   env.py          the MDP: reset, legal_actions, step, transition_probs
   agents.py       NoOp, Random, NearestFront, Greedy
   exact_solver.py exact solver (Backward DP & Value Iteration), ExactAgent
+  mcts.py         Monte Carlo Tree Search (UCT) agent
+  experiments.py  experiment runner, timing, gap tracking, structured CSV/JSON
   simulate.py     episode runner, evaluation, confidence intervals
   visualize.py    console rendering of the grid
 demo.py           baseline comparison script
 run_stage2.py     exact solver validation & scaling benchmarks
-tests/            pytest unit tests (test_env, test_agents, test_exact_solver)
-docs/             design notes (STAGE1_NOTES, STAGE2_NOTES)
-results/          precomputed reference tables and scaling outputs
+run_stage4.py     master experiment runner & scalability benchmark suites
+tests/            pytest unit tests (env, agents, exact_solver, mcts, experiments)
+docs/             design notes (STAGE1_NOTES, STAGE2_NOTES, STAGE4_NOTES)
+results/          reference tables and stage4 benchmark data
 ```
 
 ## Interface (for solver and agent code)
@@ -143,8 +154,8 @@ More detail and the modelling decisions are in [`docs/STAGE1_NOTES.md`](docs/STA
 
 - [x] **Stage 1 (Zainab):** environment, simulator, baselines B0 to B2, tests
 - [x] **Stage 2 (Tayyba):** exact solver (value iteration) on 3x3 and 3x4 grids
-- [ ] **Stage 3 (Basma):** MCTS (UCT) agent and optimality gap against value iteration
-- [ ] **Stage 4 (Tayyba):** experiment runner, rollout-budget sweeps, scalability
+- [x] **Stage 3 (Basma):** MCTS (UCT) agent and optimality gap against value iteration
+- [x] **Stage 4 (Tayyba):** experiment runner, rollout-budget sweeps, scalability
 - [ ] **Stage 5 (Zainab, Basma):** 5a robustness experiments; 5b failure-case analysis
 - [ ] **Stage 6 (Basma, Zainab):** 6a statistics and plots; 6b report and presentation
 

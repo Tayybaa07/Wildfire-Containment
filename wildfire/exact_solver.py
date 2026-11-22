@@ -127,8 +127,8 @@ class ExactSolver:
         tracemalloc.start()
         t0 = time.time()
 
-        memo_v: Dict[State, float] = {}
-        memo_pi: Dict[State, Action] = {}
+        memo_v: Dict[State, float] = dict(self.V)
+        memo_pi: Dict[State, Action] = dict(self.policy)
         visited_count = 0
         backups = 0
 
