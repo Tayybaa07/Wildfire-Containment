@@ -13,6 +13,9 @@ from __future__ import annotations
 import argparse
 import os
 import sys
+# Ensure repository root is on sys.path for imports
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 import time
 from typing import Dict, List, Tuple
 
