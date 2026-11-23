@@ -156,7 +156,7 @@ More detail and the modelling decisions are in [`docs/STAGE1_NOTES.md`](docs/STA
 - [x] **Stage 2 (Tayyba):** exact solver (value iteration) on 3x3 and 3x4 grids
 - [x] **Stage 3 (Basma):** MCTS (UCT) agent and optimality gap against value iteration
 - [x] **Stage 4 (Tayyba):** experiment runner, rollout-budget sweeps, scalability
-- [ ] **Stage 5 (Zainab, Basma):** 5a robustness experiments; 5b failure-case analysis
+- [x] **Stage 5 (Zainab, Basma):** 5a robustness experiments; 5b failure-case analysis
 - [ ] **Stage 6 (Basma, Zainab):** 6a statistics and plots; 6b report and presentation
 
 ## Team
